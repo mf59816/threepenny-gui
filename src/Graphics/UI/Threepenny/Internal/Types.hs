@@ -88,6 +88,7 @@ data EventData = EventData [Maybe String]
 -- | Record for configuring the Threepenny GUI server.
 data Config = Config
   { tpPort       :: Int                 -- ^ Port number.
+  , tpBind       :: ByteString          -- ^ Interface (aka host name / IP) to listen on.
   , tpCustomHTML :: Maybe FilePath      -- ^ Custom HTML file to replace the default one.
   , tpStatic     :: Maybe FilePath      -- ^ Directory that is served under @/static@.
   , tpLog        :: ByteString -> IO () -- ^ Print a single log message.
@@ -99,6 +100,7 @@ data Config = Config
 defaultConfig :: Config
 defaultConfig = Config
     { tpPort       = 10000
+    , tpBind       = fromString "localhost"
     , tpCustomHTML = Nothing
     , tpStatic     = Nothing
     , tpLog        = \s -> hPut stderr s >> hPut stderr (fromString "\n")

@@ -120,6 +120,8 @@ serve Config{..} worker = do
     server <- newServerState
     _      <- forkIO $ custodian 30 (sSessions server)
     let config = Snap.setPort tpPort
+               $ Snap.setBind tpBind
+               $ Snap.setHostname tpBind
                $ Snap.setErrorLog (Snap.ConfigIoLog tpLog)
                $ Snap.setAccessLog (Snap.ConfigIoLog tpLog)
                $ Snap.defaultConfig
